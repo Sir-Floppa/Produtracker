@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">Produtracker 2</string>
+
+    <!-- Menu principal -->
+    <string name="tablaSemanal">Tabla Semanal</string>
+    <string name="categorias">Categorías</string>
+    <string name="registro">Registro</string>
+
+    <!-- Semana -->
+    <string name="categoria">Categoría</string>
+    <string name="semana">Semana</string>
+    <string name="productividad">Productividad</string>
+
+    <string name="l">L</string>
+    <string name="m">M</string>
+    <string name="x">X</string>
+    <string name="j">J</string>
+    <string name="v">V</string>
+    <string name="s">S</string>
+    <string name="d">D</string>
+
+    <!-- Categorias -->
+    <string name="prioridad">Prioridad</string>
+    <string name="nombre">Nombre</string>
+
+    <!-- Interaccion -->
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="anadir">Crear Categoría</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+
+    <!-- Prioridad -->
+    <string name="alta">Alta</string>
+    <string name="media">Media</string>
+    <string name="baja">Baja</string>
+    <string name="nula">Nula</string>
+
+    <string name="title_activity_nueva_categoria">NuevaCategoriaActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+</resources>
