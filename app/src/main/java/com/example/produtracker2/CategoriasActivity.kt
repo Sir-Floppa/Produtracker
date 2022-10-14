@@ -18,23 +18,20 @@ class CategoriasActivity : AppCompatActivity() {
         // Botones
         btnTablaCategorias.setOnClickListener{ cargarVista(main) }
         btnRegistroCategorias.setOnClickListener{ cargarVista(registroIntent) }
-        btnNuevaCategoria.setOnClickListener{ startActivity(nuevaCategoriaIntent) }
+        btnNuevaCategoria.setOnClickListener{ cargarVista(nuevaCategoriaIntent) }
 
-        cargarCategoria("Prueba", 3)
-        cargarCategoria("Prueba 2", 1)
-        cargarCategoria("Prueba 3", 2)
-        cargarCategoria("Prueba 4", 0)
-        cargarCategoria("Prueba", 3)
-        cargarCategoria("Prueba 2", 1)
-        cargarCategoria("Prueba 3", 2)
-        cargarCategoria("Prueba 4", 0)
+        var sqlManager = SQLManager(this)
+        var categorias = sqlManager.leerCategorias(this)
 
+        for(categoria in categorias) {
+            cargarCategoria(categoria)
+        }
     }
 
-    fun cargarCategoria(nombre: String, prioridad: Int){
+    fun cargarCategoria(dato: CategoriaClass){
         val fila = layoutInflater.inflate(R.layout.categoria, null)
-        fila.nombreCategoria.setText(nombre)
-        when(prioridad) {
+        fila.nombreCategoria.setText(dato.nombre)
+        when(dato.prioridad) {
             0 -> fila.prioridad.setText("Nula")
             1 -> fila.prioridad.setText("Baja")
             2 -> fila.prioridad.setText("Media")

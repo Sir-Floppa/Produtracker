@@ -41,30 +41,31 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <RadioGroup
+            android:id="@+id/priorityGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/prioridadAlta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/alta" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/prioridadMedia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/media" />
 
             <RadioButton
-                android:id="@+id/radioButton3"
+                android:id="@+id/prioridadBaja"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/baja" />
 
             <RadioButton
-                android:id="@+id/radioButton4"
+                android:id="@+id/prioridadNula"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/nula" />
