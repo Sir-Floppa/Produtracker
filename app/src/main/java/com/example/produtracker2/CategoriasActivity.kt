@@ -11,18 +11,14 @@ class CategoriasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_categorias)
 
+        val main = Intent(this, MainActivity::class.java)
         val registroIntent = Intent(this, RegistroActivity::class.java)
         val nuevaCategoriaIntent = Intent(this, NuevaCategoriaActivity::class.java)
 
         // Botones
-        btnTablaCategorias.setOnClickListener{ this.finish() }
-        btnRegistroCategorias.setOnClickListener{
-            startActivity(registroIntent)
-            this.finish()
-        }
-        btnNuevaCategoria.setOnClickListener{
-            startActivity(nuevaCategoriaIntent)
-        }
+        btnTablaCategorias.setOnClickListener{ cargarVista(main) }
+        btnRegistroCategorias.setOnClickListener{ cargarVista(registroIntent) }
+        btnNuevaCategoria.setOnClickListener{ startActivity(nuevaCategoriaIntent) }
 
         cargarCategoria("Prueba", 3)
         cargarCategoria("Prueba 2", 1)
@@ -46,5 +42,10 @@ class CategoriasActivity : AppCompatActivity() {
         }
 
         categorias.addView(fila)
+    }
+
+    fun cargarVista(vista: Intent) {
+        startActivity(vista)
+        this.finish()
     }
 }

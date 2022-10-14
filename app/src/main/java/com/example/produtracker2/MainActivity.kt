@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         val registroIntent = Intent(this, RegistroActivity::class.java)
 
         // Botones
-        btnCategoriasTabla.setOnClickListener{ startActivity(categoriasIntent) }
-        btnRegistroTabla.setOnClickListener{ startActivity(registroIntent) }
+        btnCategoriasTabla.setOnClickListener{ cargarVista(categoriasIntent) }
+        btnRegistroTabla.setOnClickListener{ cargarVista(registroIntent) }
 
         cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
         cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
@@ -52,5 +52,10 @@ class MainActivity : AppCompatActivity() {
         fila.DValue.setText(DVal.toString())
 
         tabla.addView(fila)
+    }
+
+    fun cargarVista(vista: Intent) {
+        startActivity(vista)
+        this.finish()
     }
 }

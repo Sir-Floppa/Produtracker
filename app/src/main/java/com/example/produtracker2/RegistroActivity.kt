@@ -10,14 +10,12 @@ class RegistroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registro)
 
-        val categoriasIntent = Intent(this, RegistroActivity::class.java)
+        val main = Intent(this, MainActivity::class.java)
+        val categoriasIntent = Intent(this, CategoriasActivity::class.java)
 
         // Botones
-        btnTablaRegistro.setOnClickListener{ this.finish() }
-        btnCategoriasRegistro.setOnClickListener{
-            startActivity(categoriasIntent)
-            finish()
-        }
+        btnTablaRegistro.setOnClickListener{ cargarVista(main) }
+        btnCategoriasRegistro.setOnClickListener{ cargarVista(categoriasIntent) }
 
         cargarFila()
     }
@@ -25,5 +23,10 @@ class RegistroActivity : AppCompatActivity() {
     fun cargarFila() {
         val fila = layoutInflater.inflate(R.layout.registrosemanal, null)
         registros.addView(fila)
+    }
+
+    fun cargarVista(vista: Intent) {
+        startActivity(vista)
+        this.finish()
     }
 }
