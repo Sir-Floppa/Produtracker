@@ -29,6 +29,7 @@
     <string name="anadir">Crear Categoría</string>
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
+    <string name="actualizar">Actualizar</string>
 
     <!-- Prioridad -->
     <string name="alta">Alta</string>

@@ -79,4 +79,42 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
         return resArray
     }
 
+    fun eliminarCategoria(context: Context, id: Int): Boolean {
+        var response = true
+
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        try {
+            manager.delete("categorias", "idCategoria LIKE ?", arrayOf(id.toString()))
+        }
+        catch(e: Exception) {
+            print(e.message)
+            Toast.makeText(context, "Categoría eliminada con éxito.", Toast.LENGTH_LONG).show()
+            response = false
+        }
+
+        return response
+    }
+
+    fun actualizarCategoria(context: Context, datos: CategoriaClass): Boolean {
+        var response = true
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        try {
+            var contentValues = ContentValues()
+            contentValues.put("nombre", datos.nombre)
+            contentValues.put("prioridad", datos.prioridad)
+
+            manager.update("categorias", contentValues, "idCategoria LIKE ?", arrayOf(datos.id.toString()))
+        }
+        catch(e: Exception) {
+            print(e.message)
+            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            response = false
+        }
+        return response
+    }
+
 }
