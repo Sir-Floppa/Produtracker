@@ -16,33 +16,25 @@ class MainActivity : AppCompatActivity() {
         val categoriasIntent = Intent(this, CategoriasActivity::class.java)
         val registroIntent = Intent(this, RegistroActivity::class.java)
 
+        val sqlManager = SQLManager(this)
+        val categorias = sqlManager.leerCategorias(this)
+
         // Botones
         btnCategoriasTabla.setOnClickListener{ cargarVista(categoriasIntent) }
         btnRegistroTabla.setOnClickListener{ cargarVista(registroIntent) }
 
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
-        cargarFila("Prueba 1", 1, 2, 3, 4, 5, 6, 7)
-        cargarFila("Prueba 2", 3, 4, 5, 7, 4, 5, 4)
+        for(categoria in categorias) {
+            cargarFila(categoria, 1, 2, 3, 4, 5, 6, 7)
+        }
     }
 
     fun cargarFila(
-        categoria: String,
+        dato: CategoriaClass,
         LVal: Int, MVal: Int, XVal: Int,
         JVal: Int, VVal: Int, SVal: Int, DVal: Int) {
         val fila = layoutInflater.inflate(R.layout.tablerow, null)
 
-        fila.btnCategoria.setText(categoria)
+        fila.btnCategoria.setText(dato.nombre)
         fila.LValue.setText(LVal.toString())
         fila.MValue.setText(MVal.toString())
         fila.XValue.setText(XVal.toString())

@@ -6,15 +6,43 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
 import android.widget.Toast
+import kotlin.reflect.typeOf
 
-class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db", null, 1) {
+class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker1.db", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL("CREATE TABLE categorias (idCategoria INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombre VARCHAR(24), prioridad INT)")
+        db!!.execSQL("CREATE TABLE filasTablaSemanal (idFila INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, LValue	INTEGER DEFAULT 0, MValue INTEGER DEFAULT 0, XValue	INTEGER DEFAULT 0, JValue INTEGER DEFAULT 0, VValue	INTEGER DEFAULT 0, SValue INTEGER DEFAULT 0, DValue	INTEGER DEFAULT 0, idCategoria	INTEGER NOT NULL, FOREIGN KEY(idCategoria) REFERENCES categorias(idCategorias))")
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
         TODO("Not yet implemented")
+    }
+
+    // Filas
+    fun anadirFila(context:Context, ans: Int): Boolean {
+        var response = true
+
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        var contentValues = ContentValues()
+        contentValues.putNull("idFila")
+        contentValues.put("idCategoria", ans)
+
+        try {
+            manager.insert("filasTablaSemanal", null, contentValues)
+        }
+        catch(e: Exception) {
+            print(e.message)
+            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            response = false
+        }
+        finally {
+            db.close()
+        }
+
+        return response
     }
 
     // Categorias
@@ -30,7 +58,8 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
         var manager = db.writableDatabase
 
         try {
-            manager.insert("categorias", null, contentValues)
+            var ans = manager.insert("categorias", null, contentValues)
+            anadirFila(context, ans.toInt())
         }
         catch(e: Exception) {
             print(e.message)
@@ -38,7 +67,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
             response = false
         }
         finally {
-            // db.close()
+            db.close()
         }
 
         return response
@@ -58,7 +87,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
                 arrayOf(),
                 "",
                 null,
-                null
+                "prioridad"
             )
 
             with(ans) {
@@ -74,6 +103,9 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
         catch(e: Exception) {
             print(e.message)
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+        }
+        finally {
+            db.close()
         }
 
         return resArray
@@ -92,6 +124,9 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
             print(e.message)
             Toast.makeText(context, "Categoría eliminada con éxito.", Toast.LENGTH_LONG).show()
             response = false
+        }
+        finally {
+            db.close()
         }
 
         return response
@@ -113,6 +148,9 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker.db",
             print(e.message)
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
             response = false
+        }
+        finally {
+            db.close()
         }
         return response
     }
