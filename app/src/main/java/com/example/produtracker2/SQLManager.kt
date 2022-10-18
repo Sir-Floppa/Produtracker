@@ -45,6 +45,77 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker1.db"
         return response
     }
 
+    fun actualizarFila(context: Context, id: Int?, campo: String, valor: Int) {
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        var contentValues = ContentValues()
+        contentValues.put(campo, valor)
+        try {
+            manager.update("filasTablaSemanal", contentValues, "idCategoria LIKE ${id}", null)
+        }
+        catch(e: Exception) {
+            print(e.message)
+            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+        }
+        finally {
+            db.close()
+        }
+    }
+
+    fun seleccionarFila(context: Context, id: Int?): FilaClass {
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        var res = arrayOf<FilaClass>()
+
+        try {
+            val ans = manager.query(
+                "filasTablaSemanal",
+                arrayOf(
+                    "idFila",
+                    "LValue",
+                    "MValue",
+                    "XValue",
+                    "JValue",
+                    "VValue",
+                    "SValue",
+                    "DValue",
+                    "idCategoria"),
+                "idCategoria == ${id}",
+                arrayOf(),
+                "",
+                null,
+                null
+            )
+
+            with(ans) {
+                while(moveToNext()) {
+                    var id = getInt(getColumnIndexOrThrow("idFila"))
+                    var LValue = getInt(getColumnIndexOrThrow("LValue"))
+                    var MValue = getInt(getColumnIndexOrThrow("MValue"))
+                    var XValue = getInt(getColumnIndexOrThrow("XValue"))
+                    var JValue = getInt(getColumnIndexOrThrow("JValue"))
+                    var VValue = getInt(getColumnIndexOrThrow("VValue"))
+                    var SValue = getInt(getColumnIndexOrThrow("SValue"))
+                    var DValue = getInt(getColumnIndexOrThrow("DValue"))
+                    var idCategoria = getInt(getColumnIndexOrThrow("idCategoria"))
+
+                    res += FilaClass(id, idCategoria, LValue, MValue, XValue, JValue, VValue, SValue, DValue)
+                }
+            }
+        }
+        catch(e: Exception) {
+            print(e.message)
+            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+        }
+        finally {
+            db.close()
+        }
+
+        return res[0]
+    }
+
     // Categorias
     fun anadirCategoria(context: Context, datos: CategoriaClass): Boolean {
         var response = true
@@ -87,7 +158,7 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker1.db"
                 arrayOf(),
                 "",
                 null,
-                "prioridad"
+                "prioridad DESC"
             )
 
             with(ans) {
