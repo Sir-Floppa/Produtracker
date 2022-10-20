@@ -18,7 +18,7 @@ import java.time.temporal.TemporalAdjusters
 import java.util.*
 import kotlin.reflect.typeOf
 
-class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker4.db", null, 1) {
+class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker_DB.db", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         db!!.execSQL("CREATE TABLE categorias (idCategoria INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombre VARCHAR(24), prioridad INT)")
@@ -129,6 +129,36 @@ class SQLManager(context: Context): SQLiteOpenHelper(context, "produtracker4.db"
         }
 
         return response
+    }
+
+    fun leerRegistros(context: Context): Array<RegistroClass> {
+        var db = SQLManager(context)
+        var manager = db.writableDatabase
+
+        var res = arrayOf<RegistroClass>()
+
+        var ans = manager.query(
+            "registros",
+            arrayOf("idRegistro", "fechaInicio", "fechaFinal", "valor"),
+            null,
+            arrayOf(),
+            "",
+            null,
+            null
+        )
+
+        with(ans) {
+            while(moveToNext()) {
+                var id = getInt(getColumnIndexOrThrow("idRegistro"))
+                var fechaInicio = getString(getColumnIndexOrThrow("fechaInicio"))
+                var fechaFinal = getString(getColumnIndexOrThrow("fechaFinal"))
+                var valor = getInt(getColumnIndexOrThrow("valor"))
+
+                res += RegistroClass(id, fechaInicio, fechaFinal, valor)
+            }
+        }
+
+        return res
     }
 
     // Filas

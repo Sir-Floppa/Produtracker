@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_registro.*
+import kotlinx.android.synthetic.main.registrosemanal.view.*
 
 class RegistroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +18,19 @@ class RegistroActivity : AppCompatActivity() {
         btnTablaRegistro.setOnClickListener{ cargarVista(main) }
         btnCategoriasRegistro.setOnClickListener{ cargarVista(categoriasIntent) }
 
-        cargarFila()
+        var sqlManager = SQLManager(this)
+
+        var registros = sqlManager.leerRegistros(this)
+
+        for(registro in registros) {
+            cargarFila(registro)
+        }
     }
 
-    fun cargarFila() {
+    fun cargarFila(reg: RegistroClass) {
         val fila = layoutInflater.inflate(R.layout.registrosemanal, null)
+        fila.txtFecha.text = "${reg.fInicio} - ${reg.fFinal}"
+        fila.txtValor.text = reg.valor.toString()
         registros.addView(fila)
     }
 
